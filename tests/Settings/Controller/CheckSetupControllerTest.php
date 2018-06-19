@@ -119,7 +119,22 @@ class CheckSetupControllerTest extends TestCase {
 				$this->lockingProvider,
 				$this->dateTimeFormatter,
 				])
-			->setMethods(['isReadOnlyConfig', 'hasValidTransactionIsolationLevel', 'hasFileinfoInstalled', 'hasWorkingFileLocking', 'getLastCronInfo', 'getSuggestedOverwriteCliURL', 'getOutdatedCaches', 'getCurlVersion', 'isPhpOutdated', 'isOpcacheProperlySetup', 'hasFreeTypeSupport', 'hasMissingIndexes', 'isSqliteUsed'])->getMock();
+			->setMethods([
+				'isReadOnlyConfig',
+				'hasValidTransactionIsolationLevel',
+				'hasFileinfoInstalled',
+				'hasWorkingFileLocking',
+				'getLastCronInfo',
+				'getSuggestedOverwriteCliURL',
+				'getOutdatedCaches',
+				'getCurlVersion',
+				'isPhpOutdated',
+				'isOpcacheProperlySetup',
+				'hasFreeTypeSupport',
+				'hasMissingIndexes',
+				'isSqliteUsed',
+				'isPhpMailerUsed',
+			])->getMock();
 	}
 
 	public function testIsInternetConnectionWorkingDisabledViaConfig() {
@@ -392,6 +407,10 @@ class CheckSetupControllerTest extends TestCase {
 				'relativeTime' => '2 hours ago',
 				'backgroundJobsUrl' => 'https://example.org',
 			]);
+		$this->checkSetupController
+			->expects($this->once())
+			->method('isPhpMailerUsed')
+			->willReturn(false);
 		$this->checker
 			->expects($this->once())
 			->method('hasPassedCheck')
@@ -434,6 +453,7 @@ class CheckSetupControllerTest extends TestCase {
 				'isSqliteUsed' => false,
 				'databaseConversionDocumentation' => 'http://docs.example.org/server/go.php?to=admin-db-conversion',
 				'missingIndexes' => [],
+				'isPhpMailerUsed' => false,
 			]
 		);
 		$this->assertEquals($expected, $this->checkSetupController->check());
