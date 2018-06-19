@@ -25,6 +25,10 @@ return [
 	'routes' => [
 		['name' => 'birthday_calendar#enable', 'url' => '/enableBirthdayCalendar', 'verb' => 'POST'],
 		['name' => 'birthday_calendar#disable', 'url' => '/disableBirthdayCalendar', 'verb' => 'POST'],
+		['name' => 'invitation_response#accept', 'url' => '/invitation/accept/{token}', 'verb' => 'GET'],
+		['name' => 'invitation_response#decline', 'url' => '/invitation/decline/{token}', 'verb' => 'GET'],
+		['name' => 'invitation_response#tentative', 'url' => '/invitation/tentative/{token}', 'verb' => 'GET'],
+		['name' => 'invitation_response#options', 'url' => '/invitation/moreOptions/{token}', 'verb' => 'GET'],
 	],
 	'ocs' => [
 		['name' => 'direct#getUrl', 'url' => '/api/v1/direct', 'verb' => 'POST'],
